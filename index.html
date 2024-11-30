@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Classification</title>
+</head>
+<body>
+    <h1>Image Classification</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit" value="Upload">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = data.prediction;
+            });
+        });
+    </script>
+</body>
+</html>
